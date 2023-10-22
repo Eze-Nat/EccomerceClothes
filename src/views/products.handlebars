@@ -1,0 +1,27 @@
+<div>
+<h1>Bienvenido {{user.name}}!!!</h1>
+
+{{#if payload}}
+    <h1>Listado de Productos</h1>
+    <ul>
+    {{#each payload}}
+        <li>Nombre: {{this.title}}  Precio: {{this.price}}</li>
+        <button onclick="addToCart('{{this._id}}')">Agregar al carrito</button>
+    {{/each}}
+    </ul>
+
+    {{#if hasPrevPage}}
+        <a href={{prevLink}}>Anterior</a>
+    {{/if}}
+
+    {{page}}
+
+    {{#if hasNextPage}}
+        <a href={{nextLink}}>Siguiente</a>
+    {{/if}}
+{{else}}
+    <h2>No hay productos</h2>
+{{/if}}
+</div>
+<script src="/socket.io/socket.io.js"></script>
+
