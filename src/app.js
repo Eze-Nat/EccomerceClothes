@@ -9,6 +9,8 @@ import cookieParser from "cookie-parser";
 import userRouter from "./routes/user.route.js";
 import authRouter from "./routes/auth.route.js";
 import viewsRouter from "./routes/views.route.js";
+//import cartRouter from './routes/cart.route.js';
+import productRouter from './routes/product.route.js'
 
 dotenv.config();
 const app = express();
@@ -38,6 +40,8 @@ app.use(cookieParser())
 app.use('/', viewsRouter)
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
+//app.use("/api/cart", cartRouter);
+app.use('/api/products', productRouter)
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

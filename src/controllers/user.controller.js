@@ -1,6 +1,7 @@
 import { errorHandler } from "../utils/error.js"
 import bcrypt from 'bcrypt'
 import {userModel} from "../models/user.model.js"
+import { productsModel } from "../models/products.model.js"
 
 export const test = (req, res) =>{
   res.json({
@@ -9,7 +10,7 @@ export const test = (req, res) =>{
 }
 
 export const updateUser = async (req, res, next) => {
-  if(req.user.id !== req.params.id) return next(errorHandler(401, 'No se puede actualizar!'))
+  if(req.user.id === req.params.id) return next(errorHandler(401, 'No se puede actualizar!'))
   try {
     if(req.body.password){
       req.body.password = bcrypt.hashSync(req.body.password, 10)
@@ -39,4 +40,29 @@ export const deleteUser = async (req, res, next) => {
   } catch (error) {
     next(error)
   }
+}
+
+export const getUserCart = async (req, res, next) => {
+  if(req.user.id != req.params.id){
+    try {
+      const products =await productsModel.find().lean()
+      res.status(200).json(products)
+    } catch (error) {
+      next(error)
+    }
+  }else{
+    return next(errorHandler(401, 'Solo podes ver tus productos!'))
+  }
+}
+
+export const getUser = async (req, res, next) => {
+  try {
+    const user = await userModel.findById(req.params.id)
+    if(!user) return next(errorHandler(404, 'Usuario no encontrado'))
+    const {passweord: pass, ...rest} = user._doc
+    res.status(200).json(rest)
+  } catch (error) {
+    next(error)
+  }
+
 }
