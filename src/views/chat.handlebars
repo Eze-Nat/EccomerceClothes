@@ -1,26 +1,9 @@
-<div class="container-fluid">
-  <div class="row"><h1 class="text-center fw-bold text-dark mt-4">Chat Ecommerce</h1>
-    <div class="d-flex gap-3 col-md-6 offset-md-3">
-      <input
-        type="text"
-        class="form-control"
-        id="chatBox"
-        placeholder="Input Message..."
-      />
-      <input
-        type="button"
-        class="btn btn-success"
-        value="Send Message"
-        id="btnSendMessage"
-      />
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6 offset-md-3">
-      <div id="messageLogs"></div>
-    </div>
-  </div>
+<h2>Chat</h2>
+<div>
+    <span id="user"></span>  {{#if this.email}}<input type="text" id="chatbox" placeholder="Mensaje" />{{/if}}
 </div>
+<div id="messagesLogs"></div>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/socket.io/socket.io.js"></script>
-<script src="../public/js/chat.js"></script>
+<script src="/js/chat.js"></script>

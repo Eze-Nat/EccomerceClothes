@@ -1,25 +1,30 @@
-import { fileURLToPath } from "url";
-import { dirname } from "path";
-import multer from "multer";
+import { faker } from '@faker-js/faker'
+import bcrypt from 'bcryptjs'
 
+export const generateProduct = () => {
+    return {
+        _id: faker.database.mongodbObjectId(),
+        title: faker.commerce.productName(),
+        description: faker.lorem.sentence(),
+        code: faker.string.nanoid(10),
+        status: true,
+        price: parseFloat(faker.commerce.price()),
+        stock: parseInt(faker.number.int({ min: 20, max: 100 })),
+        category: faker.commerce.department(),
+        thumbnail: [faker.image.url()],
+    };
+};
 
+export const generateRandomString = (num) => {
+    return [...Array(num)].map(() => {
+        const randomNum = ~~(Math.random() * 36);
+        return randomNum.toString(36);
+    })
+        .join('')
+        .toUpperCase();
+}
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, `${__dirname}/public/images`)
-  },
-  filename: (req, file, cb) => {
-    console.log(file);
-    cb(null, `${Date.now()}-${file.originalname}`)
-  }
-})
-
-export const uploader = multer({ storage, onError:function(err,next){
-  console.log(err)
-  next()
-}})
-
-export default __dirname
+export const createHash = password => {
+    const saltRounds = 10;
+    return bcrypt.hashSync(password, saltRounds)
+}

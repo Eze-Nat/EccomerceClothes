@@ -1,23 +1,20 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
-const cartsCollection = "carts";
-
-const cartsSchema = new mongoose.Schema({
-    products:{
-        type:[
-            {
-                quantity:{
-                    type:Number,
-                    default:1
-                },
-                productId:{
-                    type:mongoose.Types.ObjectId,
-                    ref:"products"
-                }
-            }
-        ],
-        default:[]
+const cartSchema = new mongoose.Schema({
+    products: {
+        type: [{
+            _id: false,
+            product: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'products'
+            },
+            quantity: Number
+        }],
+        default: []
     }
-});
+})
 
-export const cartsModel = mongoose.model(cartsCollection, cartsSchema);
+mongoose.set('strictQuery', false)
+const cartModel = mongoose.model('carts', cartSchema)
+
+export default cartModel

@@ -1,0 +1,17 @@
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(168, 149, 149);
+    color: whitesmoke;
+}
+.ticket {
+    background-color: aliceblue;
+    color: rgb(211, 74, 74);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    border-radius: 20px;
+    padding: 20px;
+}
